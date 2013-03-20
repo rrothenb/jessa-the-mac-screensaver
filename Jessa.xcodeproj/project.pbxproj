@@ -1,0 +1,310 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DD3EFBD16F9F388000549DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBC16F9F388000549DE /* Cocoa.framework */; };
+		1DD3EFBF16F9F388000549DE /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */; };
+		1DD3EFC916F9F388000549DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD3EFC716F9F388000549DE /* InfoPlist.strings */; };
+		1DD3EFCD16F9F388000549DE /* JessaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DD3EFCC16F9F388000549DE /* JessaView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1DD3EFB916F9F388000549DE /* Jessa.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Jessa.saver; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DD3EFBC16F9F388000549DE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
+		1DD3EFC116F9F388000549DE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		1DD3EFC216F9F388000549DE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1DD3EFC316F9F388000549DE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1DD3EFC616F9F388000549DE /* Jessa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Jessa-Info.plist"; sourceTree = "<group>"; };
+		1DD3EFC816F9F388000549DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1DD3EFCA16F9F388000549DE /* Jessa-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jessa-Prefix.pch"; sourceTree = "<group>"; };
+		1DD3EFCB16F9F388000549DE /* JessaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JessaView.h; sourceTree = "<group>"; };
+		1DD3EFCC16F9F388000549DE /* JessaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JessaView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1DD3EFB416F9F388000549DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DD3EFBD16F9F388000549DE /* Cocoa.framework in Frameworks */,
+				1DD3EFBF16F9F388000549DE /* ScreenSaver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DD3EFAE16F9F388000549DE = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFC416F9F388000549DE /* Jessa */,
+				1DD3EFBB16F9F388000549DE /* Frameworks */,
+				1DD3EFBA16F9F388000549DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1DD3EFBA16F9F388000549DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFB916F9F388000549DE /* Jessa.saver */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1DD3EFBB16F9F388000549DE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFBC16F9F388000549DE /* Cocoa.framework */,
+				1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */,
+				1DD3EFC016F9F388000549DE /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1DD3EFC016F9F388000549DE /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFC116F9F388000549DE /* AppKit.framework */,
+				1DD3EFC216F9F388000549DE /* CoreData.framework */,
+				1DD3EFC316F9F388000549DE /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		1DD3EFC416F9F388000549DE /* Jessa */ = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFCB16F9F388000549DE /* JessaView.h */,
+				1DD3EFCC16F9F388000549DE /* JessaView.m */,
+				1DD3EFC516F9F388000549DE /* Supporting Files */,
+			);
+			path = Jessa;
+			sourceTree = "<group>";
+		};
+		1DD3EFC516F9F388000549DE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DD3EFC616F9F388000549DE /* Jessa-Info.plist */,
+				1DD3EFC716F9F388000549DE /* InfoPlist.strings */,
+				1DD3EFCA16F9F388000549DE /* Jessa-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1DD3EFB516F9F388000549DE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1DD3EFB816F9F388000549DE /* Jessa */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DD3EFD016F9F388000549DE /* Build configuration list for PBXNativeTarget "Jessa" */;
+			buildPhases = (
+				1DD3EFB316F9F388000549DE /* Sources */,
+				1DD3EFB416F9F388000549DE /* Frameworks */,
+				1DD3EFB516F9F388000549DE /* Headers */,
+				1DD3EFB616F9F388000549DE /* Resources */,
+				1DD3EFB716F9F388000549DE /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Jessa;
+			productName = Jessa;
+			productReference = 1DD3EFB916F9F388000549DE /* Jessa.saver */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1DD3EFAF16F9F388000549DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Rick Rothenberg";
+			};
+			buildConfigurationList = 1DD3EFB216F9F388000549DE /* Build configuration list for PBXProject "Jessa" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1DD3EFAE16F9F388000549DE;
+			productRefGroup = 1DD3EFBA16F9F388000549DE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1DD3EFB816F9F388000549DE /* Jessa */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1DD3EFB616F9F388000549DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DD3EFC916F9F388000549DE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		1DD3EFB716F9F388000549DE /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1DD3EFB316F9F388000549DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1DD3EFCD16F9F388000549DE /* JessaView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1DD3EFC716F9F388000549DE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DD3EFC816F9F388000549DE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DD3EFCE16F9F388000549DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1DD3EFCF16F9F388000549DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1DD3EFD116F9F388000549DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jessa/Jessa-Prefix.pch";
+				INFOPLIST_FILE = "Jessa/Jessa-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Debug;
+		};
+		1DD3EFD216F9F388000549DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jessa/Jessa-Prefix.pch";
+				INFOPLIST_FILE = "Jessa/Jessa-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = saver;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DD3EFB216F9F388000549DE /* Build configuration list for PBXProject "Jessa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DD3EFCE16F9F388000549DE /* Debug */,
+				1DD3EFCF16F9F388000549DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DD3EFD016F9F388000549DE /* Build configuration list for PBXNativeTarget "Jessa" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DD3EFD116F9F388000549DE /* Debug */,
+				1DD3EFD216F9F388000549DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1DD3EFAF16F9F388000549DE /* Project object */;
+}

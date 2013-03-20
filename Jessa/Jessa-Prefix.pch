@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Jessa' target in the 'Jessa' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
