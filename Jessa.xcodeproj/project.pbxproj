@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D08F8E617269F38002D1DD1 /* Processing6.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D08F8E417269F38002D1DD1 /* Processing6.h */; };
+		1D08F8E717269F38002D1DD1 /* Processing6.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08F8E517269F38002D1DD1 /* Processing6.m */; };
+		1D08F8EA17269F65002D1DD1 /* Processing4.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D08F8E817269F65002D1DD1 /* Processing4.h */; };
+		1D08F8EB17269F65002D1DD1 /* Processing4.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08F8E917269F65002D1DD1 /* Processing4.m */; };
+		1D535757170313CB0015503A /* Processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D535755170313CB0015503A /* Processing.h */; };
+		1D535758170313CB0015503A /* Processing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D535756170313CB0015503A /* Processing.m */; };
+		1DA8CF0D17046DD5007F8709 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA8CF0B17046DD5007F8709 /* Element.h */; };
+		1DA8CF0E17046DD5007F8709 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8CF0C17046DD5007F8709 /* Element.m */; };
+		1DC3E919172802AB00CA74DF /* Lissajous1.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBAF09B1723630300575C68 /* Lissajous1.m */; };
+		1DC3E91A172802B100CA74DF /* Lissajous1.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DBAF09A1723630300575C68 /* Lissajous1.h */; };
 		1DD3EFBD16F9F388000549DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBC16F9F388000549DE /* Cocoa.framework */; };
 		1DD3EFBF16F9F388000549DE /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */; };
 		1DD3EFC916F9F388000549DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD3EFC716F9F388000549DE /* InfoPlist.strings */; };
@@ -14,6 +24,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D08F8E317256667002D1DD1 /* Processing.common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Processing.common.h; sourceTree = "<group>"; };
+		1D08F8E417269F38002D1DD1 /* Processing6.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing6.h; sourceTree = "<group>"; };
+		1D08F8E517269F38002D1DD1 /* Processing6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing6.m; sourceTree = "<group>"; };
+		1D08F8E817269F65002D1DD1 /* Processing4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing4.h; sourceTree = "<group>"; };
+		1D08F8E917269F65002D1DD1 /* Processing4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing4.m; sourceTree = "<group>"; };
+		1D535755170313CB0015503A /* Processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing.h; sourceTree = "<group>"; };
+		1D535756170313CB0015503A /* Processing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing.m; sourceTree = "<group>"; };
+		1DA8CF0B17046DD5007F8709 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		1DA8CF0C17046DD5007F8709 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		1DBAF09A1723630300575C68 /* Lissajous1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lissajous1.h; sourceTree = "<group>"; };
+		1DBAF09B1723630300575C68 /* Lissajous1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lissajous1.m; sourceTree = "<group>"; };
 		1DD3EFB916F9F388000549DE /* Jessa.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Jessa.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD3EFBC16F9F388000549DE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -83,6 +104,17 @@
 				1DD3EFCB16F9F388000549DE /* JessaView.h */,
 				1DD3EFCC16F9F388000549DE /* JessaView.m */,
 				1DD3EFC516F9F388000549DE /* Supporting Files */,
+				1D535755170313CB0015503A /* Processing.h */,
+				1D08F8E317256667002D1DD1 /* Processing.common.h */,
+				1D535756170313CB0015503A /* Processing.m */,
+				1DA8CF0B17046DD5007F8709 /* Element.h */,
+				1DBAF09A1723630300575C68 /* Lissajous1.h */,
+				1DBAF09B1723630300575C68 /* Lissajous1.m */,
+				1DA8CF0C17046DD5007F8709 /* Element.m */,
+				1D08F8E417269F38002D1DD1 /* Processing6.h */,
+				1D08F8E517269F38002D1DD1 /* Processing6.m */,
+				1D08F8E817269F65002D1DD1 /* Processing4.h */,
+				1D08F8E917269F65002D1DD1 /* Processing4.m */,
 			);
 			path = Jessa;
 			sourceTree = "<group>";
@@ -104,6 +136,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D535757170313CB0015503A /* Processing.h in Headers */,
+				1DA8CF0D17046DD5007F8709 /* Element.h in Headers */,
+				1D08F8E617269F38002D1DD1 /* Processing6.h in Headers */,
+				1D08F8EA17269F65002D1DD1 /* Processing4.h in Headers */,
+				1DC3E91A172802B100CA74DF /* Lissajous1.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +219,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DD3EFCD16F9F388000549DE /* JessaView.m in Sources */,
+				1D535758170313CB0015503A /* Processing.m in Sources */,
+				1DA8CF0E17046DD5007F8709 /* Element.m in Sources */,
+				1D08F8E717269F38002D1DD1 /* Processing6.m in Sources */,
+				1D08F8EB17269F65002D1DD1 /* Processing4.m in Sources */,
+				1DC3E919172802AB00CA74DF /* Lissajous1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +345,7 @@
 				1DD3EFD216F9F388000549DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
