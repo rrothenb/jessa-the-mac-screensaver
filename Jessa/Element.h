@@ -35,4 +35,6 @@
 -(float)distance:(Element*)other;
 +(void)draw;
 -(void)draw:(Element*)other;
++(NSMutableArray*) elements;
++(int)numberFramesPerFade;
 @end

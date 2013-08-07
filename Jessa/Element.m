@@ -9,6 +9,10 @@
 #import "Element.h"
 #import "Processing.h"
 
+static int frameNumber = 0;
+
+static int numberFramesPerFade;
+
 @implementation Element
 static NSMutableArray *elements;
 +(void)initializeWithView:(NSView*) view {
@@ -18,11 +22,15 @@ static NSMutableArray *elements;
     initializeProcessing(size.width, size.height);
     elements = [[NSMutableArray alloc] init];
     [self createInstances];
+    numberFramesPerFade = [self numberFramesPerFade];
 }
 +(void)createInstances {
 }
 +(void)addObject:(Element*) element {
     [elements addObject:element];
+}
++(NSMutableArray*) elements {
+    return elements;
 }
 +(void)update {
     Element* element;
@@ -94,6 +102,12 @@ static NSMutableArray *elements;
     return dist(x, y, other->x, other->y);
 }
 +(void)draw {
+    frameNumber++;
+    if (frameNumber == numberFramesPerFade) {
+        fillHSB(0.0, 0.0, 0.0, 0.5);
+        background();
+        frameNumber = 0;
+    }
     strokeWeight(0.5);
     for (int i = 0; i < [elements count]; i++) {
         // Get a first element
@@ -118,6 +132,9 @@ static NSMutableArray *elements;
     
     // Draw a line between the centres of the elements
     line(x, y, other->x, other->y);
+}
++(int)numberFramesPerFade {
+    return 30;
 }
 
 @end

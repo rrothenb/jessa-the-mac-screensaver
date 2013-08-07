@@ -28,8 +28,11 @@ int randomIntMax(int upperLimit) {
     return SSRandomIntBetween(0, upperLimit);
 }
 
-void background(float gray) {
-    
+void background() {
+    NSGraphicsContext* nsGraphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef c = (CGContextRef) [nsGraphicsContext graphicsPort];
+    CGRect drawRect = CGRectMake(0, 0,width, height);
+    CGContextFillRect(c, drawRect);
 }
 
 void strokeWeight(float weight) {
@@ -43,7 +46,12 @@ void stroke(float r, float g, float b, float alpha) {
 
 void strokeHSB(float h, float s, float b, float alpha) {
     NSColor *color = [NSColor colorWithCalibratedHue:h/255 saturation:s/255 brightness:b/255 alpha:alpha/255];
-    [color set];
+    [color setStroke];
+}
+
+void fillHSB(float h, float s, float b, float alpha) {
+    NSColor *color = [NSColor colorWithCalibratedHue:h/255 saturation:s/255 brightness:b/255 alpha:alpha/255];
+    [color setFill];
 }
 
 void line(float x1, float y1, float x2, float y2) {
@@ -69,4 +77,15 @@ void initializeProcessing(int _width, int _height) {
     width = _width;
     height = _height;
 }
+
+void circle(float x, float y, float radius) {
+    NSGraphicsContext* nsGraphicsContext = [NSGraphicsContext currentContext];
+    CGContextRef c = (CGContextRef) [nsGraphicsContext graphicsPort];
+    CGContextSetLineWidth(c, strokeWeightValue);
+    CGContextBeginPath(c);    
+    CGRect rectangle = CGRectMake(x-radius,y-radius,radius*2,radius*2);
+    CGContextAddEllipseInRect(c, rectangle);
+    CGContextStrokePath(c);
+}
+
 

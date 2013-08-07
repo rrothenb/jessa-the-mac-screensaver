@@ -11,12 +11,19 @@
 		1D08F8E717269F38002D1DD1 /* Processing6.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08F8E517269F38002D1DD1 /* Processing6.m */; };
 		1D08F8EA17269F65002D1DD1 /* Processing4.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D08F8E817269F65002D1DD1 /* Processing4.h */; };
 		1D08F8EB17269F65002D1DD1 /* Processing4.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D08F8E917269F65002D1DD1 /* Processing4.m */; };
+		1D22CC7417732816000160AB /* Window.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D22CC7317732816000160AB /* Window.xib */; };
+		1D41553B175DEC9900FFD93C /* Minimal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D415539175DEC9900FFD93C /* Minimal.h */; };
+		1D41553C175DEC9900FFD93C /* Minimal.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D41553A175DEC9900FFD93C /* Minimal.m */; };
 		1D535757170313CB0015503A /* Processing.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D535755170313CB0015503A /* Processing.h */; };
 		1D535758170313CB0015503A /* Processing.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D535756170313CB0015503A /* Processing.m */; };
+		1D7223071733BD6700841763 /* Processing14.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D7223051733BD6700841763 /* Processing14.h */; };
+		1D7223081733BD6700841763 /* Processing14.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D7223061733BD6700841763 /* Processing14.m */; };
 		1DA8CF0D17046DD5007F8709 /* Element.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DA8CF0B17046DD5007F8709 /* Element.h */; };
 		1DA8CF0E17046DD5007F8709 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DA8CF0C17046DD5007F8709 /* Element.m */; };
 		1DC3E919172802AB00CA74DF /* Lissajous1.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DBAF09B1723630300575C68 /* Lissajous1.m */; };
 		1DC3E91A172802B100CA74DF /* Lissajous1.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DBAF09A1723630300575C68 /* Lissajous1.h */; };
+		1DC5FA58175A46C100888BAE /* Relativity.h in Headers */ = {isa = PBXBuildFile; fileRef = 1DC5FA56175A46C100888BAE /* Relativity.h */; };
+		1DC5FA59175A46C100888BAE /* Relativity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DC5FA57175A46C100888BAE /* Relativity.m */; };
 		1DD3EFBD16F9F388000549DE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBC16F9F388000549DE /* Cocoa.framework */; };
 		1DD3EFBF16F9F388000549DE /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */; };
 		1DD3EFC916F9F388000549DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1DD3EFC716F9F388000549DE /* InfoPlist.strings */; };
@@ -29,12 +36,19 @@
 		1D08F8E517269F38002D1DD1 /* Processing6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing6.m; sourceTree = "<group>"; };
 		1D08F8E817269F65002D1DD1 /* Processing4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing4.h; sourceTree = "<group>"; };
 		1D08F8E917269F65002D1DD1 /* Processing4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing4.m; sourceTree = "<group>"; };
+		1D22CC7317732816000160AB /* Window.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Window.xib; sourceTree = "<group>"; };
+		1D415539175DEC9900FFD93C /* Minimal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Minimal.h; sourceTree = "<group>"; };
+		1D41553A175DEC9900FFD93C /* Minimal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Minimal.m; sourceTree = "<group>"; };
 		1D535755170313CB0015503A /* Processing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing.h; sourceTree = "<group>"; };
 		1D535756170313CB0015503A /* Processing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing.m; sourceTree = "<group>"; };
+		1D7223051733BD6700841763 /* Processing14.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Processing14.h; sourceTree = "<group>"; };
+		1D7223061733BD6700841763 /* Processing14.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Processing14.m; sourceTree = "<group>"; };
 		1DA8CF0B17046DD5007F8709 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
 		1DA8CF0C17046DD5007F8709 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
 		1DBAF09A1723630300575C68 /* Lissajous1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lissajous1.h; sourceTree = "<group>"; };
 		1DBAF09B1723630300575C68 /* Lissajous1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lissajous1.m; sourceTree = "<group>"; };
+		1DC5FA56175A46C100888BAE /* Relativity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Relativity.h; sourceTree = "<group>"; };
+		1DC5FA57175A46C100888BAE /* Relativity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Relativity.m; sourceTree = "<group>"; };
 		1DD3EFB916F9F388000549DE /* Jessa.saver */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Jessa.saver; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DD3EFBC16F9F388000549DE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		1DD3EFBE16F9F388000549DE /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = System/Library/Frameworks/ScreenSaver.framework; sourceTree = SDKROOT; };
@@ -103,6 +117,7 @@
 			children = (
 				1DD3EFCB16F9F388000549DE /* JessaView.h */,
 				1DD3EFCC16F9F388000549DE /* JessaView.m */,
+				1D22CC7317732816000160AB /* Window.xib */,
 				1DD3EFC516F9F388000549DE /* Supporting Files */,
 				1D535755170313CB0015503A /* Processing.h */,
 				1D08F8E317256667002D1DD1 /* Processing.common.h */,
@@ -115,6 +130,12 @@
 				1D08F8E517269F38002D1DD1 /* Processing6.m */,
 				1D08F8E817269F65002D1DD1 /* Processing4.h */,
 				1D08F8E917269F65002D1DD1 /* Processing4.m */,
+				1D7223051733BD6700841763 /* Processing14.h */,
+				1D7223061733BD6700841763 /* Processing14.m */,
+				1DC5FA56175A46C100888BAE /* Relativity.h */,
+				1DC5FA57175A46C100888BAE /* Relativity.m */,
+				1D415539175DEC9900FFD93C /* Minimal.h */,
+				1D41553A175DEC9900FFD93C /* Minimal.m */,
 			);
 			path = Jessa;
 			sourceTree = "<group>";
@@ -141,6 +162,9 @@
 				1D08F8E617269F38002D1DD1 /* Processing6.h in Headers */,
 				1D08F8EA17269F65002D1DD1 /* Processing4.h in Headers */,
 				1DC3E91A172802B100CA74DF /* Lissajous1.h in Headers */,
+				1D7223071733BD6700841763 /* Processing14.h in Headers */,
+				1DC5FA58175A46C100888BAE /* Relativity.h in Headers */,
+				1D41553B175DEC9900FFD93C /* Minimal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DD3EFC916F9F388000549DE /* InfoPlist.strings in Resources */,
+				1D22CC7417732816000160AB /* Window.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +249,9 @@
 				1D08F8E717269F38002D1DD1 /* Processing6.m in Sources */,
 				1D08F8EB17269F65002D1DD1 /* Processing4.m in Sources */,
 				1DC3E919172802AB00CA74DF /* Lissajous1.m in Sources */,
+				1D7223081733BD6700841763 /* Processing14.m in Sources */,
+				1DC5FA59175A46C100888BAE /* Relativity.m in Sources */,
+				1D41553C175DEC9900FFD93C /* Minimal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,8 +332,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = YES;
+				GCC_ENABLE_SSE42_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_FAST_MATH = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jessa/Jessa-Prefix.pch";
+				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Jessa/Jessa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -317,8 +352,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SSE41_EXTENSIONS = YES;
+				GCC_ENABLE_SSE42_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Jessa/Jessa-Prefix.pch";
+				GCC_UNROLL_LOOPS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Jessa/Jessa-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Screen Savers";
 				PRODUCT_NAME = "$(TARGET_NAME)";

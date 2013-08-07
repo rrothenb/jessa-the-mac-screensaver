@@ -16,6 +16,9 @@
     float dt;
     
     float h;
+    
+    float lastX;
+    float lastY;
 }
 -(id)initWithF1: (int) _f1 f2: (int) _f2 dt: (float) _dt;
 +(void)createInstances;

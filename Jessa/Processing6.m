@@ -47,4 +47,7 @@ static float NUM_CIRCLES_PER_SQRT_AREA = 0.05;
         [self addObject:[Processing6 new]];
     }
 }
++(int)numberFramesPerFade {
+    return 500;
+}
 @end

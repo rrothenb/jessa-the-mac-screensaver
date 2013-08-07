@@ -27,7 +27,7 @@ int lastPrime = 20;
     if (self) {
         f1 = _f1;
         f2 = _f2;
-        t = randomRange(0.0, TWO_PI);
+        t = randomIntMax(7)*PI/4.0 + PI/8.0; // randomRange(0.0, TWO_PI);
         dt = _dt/(f1+f2);
         
         //h = randomRange(0, 255);
@@ -36,28 +36,35 @@ int lastPrime = 20;
         float fMin = primes[firstPrime] + primes[firstPrime+1];
         float f = f1 + f2;
         
-        h = 255 - (15 + (f - fMin)/(fMax - fMin)*(240 - 15));
+        //int quadrant = (f - fMin - 1)/(fMax - fMin)*8;
+        //t = quadrant*PI/4.0 + PI/8.0;
         
-        radius = fMax + 5 - f;
+        h = (f - fMin)/(fMax - fMin)*150 + 100;
+        
+        radius = (fMax + 15 - f)/1.5;
+        
+        x = width/2 + (width-10)/2*sin(f1*t);
+        y = height/2 + (height-10)/2*cos(f2*t);
     }
     return self;
 }
 -(void)update {
+    lastX = x;
+    lastY = y;
     x = width/2 + (width-10)/2*sin(f1*t);
     y = height/2 + (height-10)/2*cos(f2*t);
-    t = t + dt;
+    float centerDistance = dist(x, y, width/2, height/2);
+    float centerDistanceMax = dist(0, 0, width/2, height/2);
+    float percent = centerDistance/centerDistanceMax;
+    float speedup = 0.25 + percent*3.75;
+    t = t + dt*speedup;
 }
 -(void)draw:(Lissajous1*)other {
     float distance = [self distance:other];
     float alpha = 255 - distance/(radius + other->radius)*255;
-    float hue = (h + other->h)/2;
-    strokeHSB(hue,255,alpha,alpha);
-    line(x, y, other->x, other->y);
-    strokeHSB(h,h,255,h);
-    point(x, y);
-    strokeHSB(other->h,other->h,255,other->h);
-    point(other->x, other->y);
-    
+    float hue = h < other->h ? h : other->h;
+    strokeHSB(hue,255,alpha,alpha/5 + 15);
+    line(x, y, other->x, other->y);    
 }
 
 @end
