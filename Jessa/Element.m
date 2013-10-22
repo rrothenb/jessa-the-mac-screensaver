@@ -19,7 +19,7 @@ static NSMutableArray *elements;
     [super initialize];
     NSSize size;
     size = [view bounds].size;
-    initializeProcessing(size.width, size.height);
+    initializeProcessing((float)size.width, (float)size.height);
     elements = [[NSMutableArray alloc] init];
     [self createInstances];
     numberFramesPerFade = [self numberFramesPerFade];
@@ -57,8 +57,8 @@ static NSMutableArray *elements;
 }
 -(void)behavior1 {
     // Constant linear motion
-    float dx = speed * cos(heading);
-    float dy = speed * sin(heading);
+    float dx = speed * cosf(heading);
+    float dy = speed * sinf(heading);
     x += dx;
     y += dy;
 }
@@ -83,14 +83,8 @@ static NSMutableArray *elements;
 }
 -(void)behavior3 {
     // While touching another, change direction
-    Element* element;
-    for (element in elements) {
-        if (element != self) {
-            if ([self touching:element]) {
-                heading += rotation;
-                return;
-            }
-        }
+    if ([self touching]) {
+        heading += rotation;
     }
 }
 -(Boolean)touching:(Element*)other {
@@ -98,17 +92,28 @@ static NSMutableArray *elements;
     float distanceSquared = (x - other->x)*(x - other->x) + (y - other->y)*(y - other->y);
     return distanceSquared < threshold;
 }
+-(Boolean)touching {
+    Element* element;
+    for (element in elements) {
+        if (element != self) {
+            if ([self touching:element]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 -(float)distance:(Element*)other {
     return dist(x, y, other->x, other->y);
 }
 +(void)draw {
     frameNumber++;
     if (frameNumber == numberFramesPerFade) {
-        fillHSB(0.0, 0.0, 0.0, 0.5);
+        fillHSB(0.0f, 0.0f, 0.0f, 0.5f);
         background();
         frameNumber = 0;
     }
-    strokeWeight(0.5);
+    strokeWeight(0.5f);
     for (int i = 0; i < [elements count]; i++) {
         // Get a first element
         Element* element1 = [elements objectAtIndex:i];

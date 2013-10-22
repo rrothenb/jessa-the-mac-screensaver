@@ -25,6 +25,7 @@
 -(void)behavior2;
 -(void)behavior3;
 -(Boolean)touching:(Element*)other;
+-(Boolean)touching;
 +(void)initializeWithView:(NSView*) view;
 +(void)createInstances;
 +(void)update;

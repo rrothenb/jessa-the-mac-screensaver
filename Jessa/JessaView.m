@@ -14,6 +14,9 @@
 #import "Processing14.h"
 #import "Relativity.h"
 #import "Minimal.h"
+#import "Musical.h"
+#import "Relativity2.h"
+#import "Relativity3.h"
 
 typedef enum {
     processing4,
@@ -21,7 +24,10 @@ typedef enum {
     lissajous1,
     processing14,
     relativity,
-    minimal
+    minimal,
+    musical,
+    relativity2,
+    relativity3
 } Algorithm;
 
 static Class current;
@@ -34,9 +40,13 @@ static Class current;
     if (self) {
         [self setAnimationTimeInterval:1/30.0];
     }
-    Algorithm algorithm = randomIntMax(minimal);
+    Algorithm algorithm = randomIntMax(relativity3);
+    algorithm = musical;
     if (algorithm == processing4) {
         current = [Processing4 class];
+    }
+    else if (algorithm == musical) {
+        current = [Musical class];
     }
     else if (algorithm == processing6) {
         current = [Processing6 class];
@@ -49,6 +59,12 @@ static Class current;
     }
     else if (algorithm == relativity){
         current = [Relativity class];
+    }
+    else if (algorithm == relativity2){
+        current = [Relativity2 class];
+    }
+    else if (algorithm == relativity3){
+        current = [Relativity3 class];
     }
     else {
         current = [Minimal class];

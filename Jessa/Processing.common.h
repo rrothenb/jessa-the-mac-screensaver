@@ -34,6 +34,6 @@ void initializeProcessing(int width, int height);
 void circle(float x, float y, float radius);
 
 
-#define PI 3.14159265358979323846
+#define PI 3.14159265358979323846f
 #define TWO_PI 2*PI
 
