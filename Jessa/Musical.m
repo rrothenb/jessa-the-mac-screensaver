@@ -122,11 +122,11 @@
 #import "Musical.h"
 #import "Processing.h"
 
-static double REST_RADIUS_PER_SQRT_AREA = 0.025;
+static double REST_RADIUS_PER_SQRT_AREA = 0.06;
 static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.00025;
 static double MAX_VELOCITY_PER_SQRT_AREA = 0.00125;
-static double FORCE_CONSTANT_PER_AREA = .00005;
-static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.00000000135;
+static double FORCE_CONSTANT_PER_AREA = .00025;
+static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.00000008;
 static double MIN_RADIUS_PER_SQRT_AREA = .00125;
 static double maxVelocity;
 static double restRadius;
@@ -154,7 +154,7 @@ static int pitchDenominators[] = {1,8,4,3,2,3,8};
     minRadius = sqrt(area)*MIN_RADIUS_PER_SQRT_AREA;
     minPitch = pow(2,minOctave)*pitchNumerators[0]/pitchDenominators[0];
     maxPitch = pow(2,maxOctave)*pitchNumerators[6]/pitchDenominators[6];
-    for (int i = 0;i < 4;i++) {
+    for (int i = 0;i < 1;i++) {
         for (int j = minOctave; j <= maxOctave;j++) {
             for (int k = 0;k < 7;k++) {
                 [self addObject:[[Musical alloc] initWithOctave:j numerator:pitchNumerators[k] denominator:pitchDenominators[k]]];
@@ -171,12 +171,6 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
     }
     if (consonance > sonance3) {
         consonance = sonance3;
-    }
-    if (consonance > 0) {
-        consonance = pow(consonance, .25);
-    }
-    else {
-        consonance = -pow(-consonance, .25);
     }
     return consonance;
 }
@@ -243,7 +237,7 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
             double xDiff = element1->x - element2->x;
             double yDiff = element1->y - element2->y;
             double d2 = xDiff*xDiff + yDiff*yDiff;
-            if (d2 < 4*(element1->radius + element2->radius)*(element1->radius + element2->radius) && d2 > 0.001) {
+            if (d2 < 2*(element1->radius + element2->radius)*(element1->radius + element2->radius) && d2 > 0.5) {
                 double d = sqrt(d2);
                 double pairSonance = [element1 calcSonance: element2];
                 double force = -1.0/d2*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant;
@@ -292,7 +286,8 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
 }
 
 double normalizedPitch(Musical* element) {
-    return (pow(2,element->pitchOctave)*element->pitchNumerator/element->pitchDenominator-minPitch)/(maxPitch-minPitch);
+    return ((double)element->pitchNumerator/element->pitchDenominator-1.0)/(7.0/8.0);
+    //return (pow(2,element->pitchOctave)*element->pitchNumerator/element->pitchDenominator-minPitch)/(maxPitch-minPitch);
 }
 
 -(void)draw:(Musical*)other {
@@ -300,13 +295,15 @@ double normalizedPitch(Musical* element) {
     double h2 = normalizedPitch(other)*255/2+10;
     double distance = [self distance: other];
     double distanceFactor = distance/(radius + other->radius);
-    double h = (h1 + h2)/2;
+    //double h = (h1 + h2)/2;
     double pairSonance = [self calcSonance:other];
     double consonance = calcConsonance(globalSonance, other->globalSonance, pairSonance);
     consonance = consonance/2+.5f;
     
-    strokeHSB(h,255,(1-distanceFactor)*255,consonance*255/4);
+    strokeHSB(h1,255,(1-distanceFactor)*255,consonance*255/4);
     line(x, y, other->x, other->y);
+    strokeHSB(h2,255,(1-distanceFactor)*255,consonance*255/4);
+    line(x+1, y+1, other->x+1, other->y+1);
 }
 +(void)draw {
     frameNumber++;
