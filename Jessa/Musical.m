@@ -124,9 +124,9 @@
 
 static double REST_RADIUS_PER_SQRT_AREA = 0.06;
 static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.00025;
-static double MAX_VELOCITY_PER_SQRT_AREA = 0.00125;
-static double FORCE_CONSTANT_PER_AREA = .00025;
-static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.00000008;
+static double MAX_VELOCITY_PER_SQRT_AREA = 0.001;
+static double FORCE_CONSTANT_PER_AREA = .0000000125;
+static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.0000002;
 static double MIN_RADIUS_PER_SQRT_AREA = .00125;
 static double maxVelocity;
 static double restRadius;
@@ -237,10 +237,10 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
             double xDiff = element1->x - element2->x;
             double yDiff = element1->y - element2->y;
             double d2 = xDiff*xDiff + yDiff*yDiff;
-            if (d2 < 2*(element1->radius + element2->radius)*(element1->radius + element2->radius) && d2 > 0.5) {
+            if (d2 < 2*(element1->radius + element2->radius)*(element1->radius + element2->radius) && d2 > 0.1) {
                 double d = sqrt(d2);
                 double pairSonance = [element1 calcSonance: element2];
-                double force = -1.0/d2*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant;
+                double force = -1.0/d*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant*element1->mass*element2->mass;
                 force += 1.0/(d2*d2)*repulsiveForceConstant;
                 [element1 updateVelocityUsingElement:element2 Force:force Distance:d];
                 [element2 updateVelocityUsingElement:element1 Force:force Distance:d];
