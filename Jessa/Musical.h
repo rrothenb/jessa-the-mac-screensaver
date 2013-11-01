@@ -29,4 +29,5 @@
 +(void)draw;
 -(id)initWithOctave: (int) octave numerator: (int) numerator denominator: (int) denominator;
 -(double)calcSonance: (Musical*)other;
+-(Boolean)touching: (Element*) other ThresholdMultiplier: (double) thresholdMultiplier DistanceSquared: (double*) distance WidthOffset: (int*) widthOffset HeightOffset: (int*) heightOffset;
 @end

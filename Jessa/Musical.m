@@ -234,10 +234,10 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
         Musical* element1 = [elements objectAtIndex:i];
         for (int j = i+1; j < [elements count]; j++) {
             Musical* element2 = [elements objectAtIndex:j];
-            double xDiff = element1->x - element2->x;
-            double yDiff = element1->y - element2->y;
-            double d2 = xDiff*xDiff + yDiff*yDiff;
-            if (d2 < 2*(element1->radius + element2->radius)*(element1->radius + element2->radius) && d2 > 0.1) {
+            int widthOffset;
+            int heightOffset;
+            double d2;
+            if ([element1 touching: element2 ThresholdMultiplier: 2.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset] && d2 > 0.1) {
                 double d = sqrt(d2);
                 double pairSonance = [element1 calcSonance: element2];
                 double force = -1.0/d*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant*element1->mass*element2->mass;
@@ -254,17 +254,17 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
         element->lastY = element->y;
         element->x += element->dx;
         element->y += element->dy;
-        if (element->x>width*1.01 ||
-            element->x<-width*0.01) {
-            element->dx = -element->dx;
-            element->x = element->lastX;
-            element->y = element->lastY;
+        if (element->x > width) {
+            element->x = element->x - width;
         }
-        if (element->y>height*1.01 ||
-            element->y<-height*0.01) {
-            element->dy = -element->dy;
-            element->x = element->lastX;
-            element->y = element->lastY;
+        else if (element->x < 0) {
+            element->x = element->x + width;
+        }
+        if (element->y > height) {
+            element->y = element->y - height;
+        }
+        else if (element->y < 0) {
+            element->y = element->y + height;
         }
     }
 }
@@ -307,7 +307,7 @@ double normalizedPitch(Musical* element) {
 }
 +(void)draw {
     frameNumber++;
-    if (frameNumber == 60) {
+    if (frameNumber == 300) {
         fillHSB(0.0f, 0.0f, 0.0f, 0.5f);
         background();
         frameNumber = 0;
@@ -324,8 +324,22 @@ double normalizedPitch(Musical* element) {
             // Get a second element
             Element* element2 = [elements objectAtIndex:j];
             // If the elements are touching
-            if ([element1 touching:element2]) {
-                [element1 draw:element2];
+            double d2;
+            int widthOffset;
+            int heightOffset;
+            if ([element1 touching: element2 ThresholdMultiplier: 1.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset]) {
+                if (widthOffset == 0 && heightOffset == 0) {
+                    [element1 draw:element2];
+                }
+                else if (widthOffset == 0) {
+                    [element1 draw:element2];
+                }
+                else if (heightOffset == 0) {
+                    [element1 draw:element2];
+                }
+                else {
+                    [element1 draw:element2];
+                }
             }
         }
     }
@@ -380,6 +394,98 @@ int gcf(int a, int b) {
     intervalNumerator = intervalNumerator/commonFactor;
     intervalDenominator = intervalDenominator/commonFactor;
     return 2/sqrt(intervalDenominator)-1.0;
+}
+
+double d2(Element* a, Element* b, int widthOffset, int heightOffset) {
+    double xDiff = a->x - b->x + widthOffset;
+    double yDiff = a->y - b->y + heightOffset;
+    return xDiff*xDiff + yDiff*yDiff;
+}
+
+-(Boolean)touching: (Element*) other ThresholdMultiplier: (double) thresholdMultiplier DistanceSquared: (double*) distanceSquared WidthOffset: (int*) widthOffset HeightOffset: (int*) heightOffset {
+    float threshold = thresholdMultiplier*(radius + other->radius)*(radius + other->radius);
+    *widthOffset = 0;
+    *heightOffset = 0;
+    *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+    if (*distanceSquared < threshold) {
+        return true;
+    } else {
+        double d = sqrt(*distanceSquared);
+        // is it possible that the two points are close if wrapped around?
+        if ((x > width-d && other->x < x-width+d) ||
+            (x < d && other->x > width-d+x) ||
+            (y > height-d && other->y < y-height+d) ||
+            (y < d && other->y > height-d+y)) {
+            // check corner to opposite corner
+            if (x > width-d && y > height-d) {
+                *widthOffset = width;
+                *heightOffset = height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            else if (x > width-d && y < d) {
+                *widthOffset = width;
+                *heightOffset = -height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            else if (x < d && y > height-d) {
+                *widthOffset = -width;
+                *heightOffset = height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            else if (x < d && y < d) {
+                *widthOffset = width;
+                *heightOffset = height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            // check left/right
+            if (x > width-d) {
+                *widthOffset = width;
+                *heightOffset = 0;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            else if (x < d) {
+                *widthOffset = -width;
+                *heightOffset = 0;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            // check top/bottom
+            if (y > height-d) {
+                *widthOffset = 0;
+                *heightOffset = height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+            else if (y < d) {
+                *widthOffset = 0;
+                *heightOffset = -height;
+                *distanceSquared = d2(self, other, *widthOffset, *heightOffset);
+                if (*distanceSquared < threshold) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 
