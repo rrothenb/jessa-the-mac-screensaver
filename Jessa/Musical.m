@@ -242,8 +242,8 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
                 double pairSonance = [element1 calcSonance: element2];
                 double force = -1.0/d*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant*element1->mass*element2->mass;
                 force += 1.0/(d2*d2)*repulsiveForceConstant;
-                [element1 updateVelocityUsingElement:element2 Force:force Distance:d];
-                [element2 updateVelocityUsingElement:element1 Force:force Distance:d];
+                [element1 updateVelocityUsingElement:element2 Force:force Distance:d WidthOffset:widthOffset HeightOffset:heightOffset];
+                [element2 updateVelocityUsingElement:element1 Force:force Distance:d WidthOffset:-widthOffset HeightOffset:-heightOffset];
             }
         }
     }
@@ -268,9 +268,10 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
         }
     }
 }
--(void)updateVelocityUsingElement: (Element*) other Force: (double) force Distance: (double) d {
-    double xDiff = x - other->x;
-    double yDiff = y - other->y;
+
+-(void)updateVelocityUsingElement: (Element*) other Force: (double) force Distance: (double) d WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset {
+    double xDiff = x - other->x - widthOffset;
+    double yDiff = y - other->y - heightOffset;
     double acceleration = force/mass;
     double dxTemp = dx + xDiff/d*acceleration;
     double dyTemp = dy + yDiff/d*acceleration;
@@ -290,10 +291,9 @@ double normalizedPitch(Musical* element) {
     //return (pow(2,element->pitchOctave)*element->pitchNumerator/element->pitchDenominator-minPitch)/(maxPitch-minPitch);
 }
 
--(void)draw:(Musical*)other {
+-(void)draw:(Musical*)other WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset Distance:(double) distance {
     double h1 = normalizedPitch(self)*255/2+10;
     double h2 = normalizedPitch(other)*255/2+10;
-    double distance = [self distance: other];
     double distanceFactor = distance/(radius + other->radius);
     //double h = (h1 + h2)/2;
     double pairSonance = [self calcSonance:other];
@@ -301,9 +301,9 @@ double normalizedPitch(Musical* element) {
     consonance = consonance/2+.5f;
     
     strokeHSB(h1,255,(1-distanceFactor)*255,consonance*255/4);
-    line(x, y, other->x, other->y);
+    line(x, y, other->x + widthOffset, other->y + heightOffset);
     strokeHSB(h2,255,(1-distanceFactor)*255,consonance*255/4);
-    line(x+1, y+1, other->x+1, other->y+1);
+    line(x+1, y+1, other->x+1+widthOffset, other->y+1+heightOffset);
 }
 +(void)draw {
     frameNumber++;
@@ -320,25 +320,39 @@ double normalizedPitch(Musical* element) {
         //double h = element1->velocity/maxVelocity*255;
         //strokeHSB(0,0,h,150);
         //line(element1->lastX, element1->lastY, element1->x, element1->y);
+        //strokeHSB(0, 0, 255, 255);
+        //point(element1->x, element1->y);
+        //strokeHSB(0, 0, 0, 255);
+        //point(element1->lastX, element1->lastY);
+        //point(element2->lastX, element2->lastY);
+        //strokeHSB(0, 0, 100, 100);
+        //circle(element1->x, element1->y, element1->radius);
+        //double velocityFactor = element1->velocity/maxVelocity*100+50;
+        //strokeHSB(0, 0, velocityFactor, velocityFactor);
+        //circle(element1->x, element1->y, element1->radius*sqrt(2.0));
         for (int j = i+1; j < [elements count]; j++) {
             // Get a second element
-            Element* element2 = [elements objectAtIndex:j];
+            Musical* element2 = [elements objectAtIndex:j];
             // If the elements are touching
             double d2;
             int widthOffset;
             int heightOffset;
             if ([element1 touching: element2 ThresholdMultiplier: 1.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset]) {
+                double d = sqrt(d2);
                 if (widthOffset == 0 && heightOffset == 0) {
-                    [element1 draw:element2];
+                    [element1 draw:element2 WidthOffset: 0 HeightOffset: 0 Distance: d];
                 }
                 else if (widthOffset == 0) {
-                    [element1 draw:element2];
+                    [element1 draw:element2 WidthOffset: 0 HeightOffset: heightOffset Distance: d];
+                    [element2 draw:element1 WidthOffset: 0 HeightOffset: -heightOffset Distance: d];
                 }
                 else if (heightOffset == 0) {
-                    [element1 draw:element2];
+                    [element1 draw:element2 WidthOffset: widthOffset HeightOffset: 0 Distance: d];
+                    [element2 draw:element1 WidthOffset: -widthOffset HeightOffset: 0 Distance: d];
                 }
                 else {
-                    [element1 draw:element2];
+                    [element1 draw:element2 WidthOffset: widthOffset HeightOffset: heightOffset Distance: d];
+                    [element2 draw:element1 WidthOffset: -widthOffset HeightOffset: -heightOffset Distance: d];
                 }
             }
         }
@@ -397,8 +411,8 @@ int gcf(int a, int b) {
 }
 
 double d2(Element* a, Element* b, int widthOffset, int heightOffset) {
-    double xDiff = a->x - b->x + widthOffset;
-    double yDiff = a->y - b->y + heightOffset;
+    double xDiff = a->x - b->x - widthOffset;
+    double yDiff = a->y - b->y - heightOffset;
     return xDiff*xDiff + yDiff*yDiff;
 }
 

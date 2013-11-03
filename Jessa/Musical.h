@@ -24,8 +24,8 @@
 }
 +(void)update;
 +(void)createInstances;
--(void)updateVelocityUsingElement: (Element*) other Force: (double) force Distance: (double) distance;
--(void)draw:(Element*)other;
+-(void)updateVelocityUsingElement: (Element*) other Force: (double) force Distance: (double) distance WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset;
+-(void)draw:(Element*)other WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset Distance: (double) distance;
 +(void)draw;
 -(id)initWithOctave: (int) octave numerator: (int) numerator denominator: (int) denominator;
 -(double)calcSonance: (Musical*)other;
