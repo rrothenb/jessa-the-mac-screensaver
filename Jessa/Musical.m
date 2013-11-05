@@ -128,12 +128,14 @@ static double MAX_VELOCITY_PER_SQRT_AREA = 0.001;
 static double FORCE_CONSTANT_PER_AREA = .0000000125;
 static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.0000002;
 static double MIN_RADIUS_PER_SQRT_AREA = .00125;
+static double FRICTION_PER_SQRT_AREA = 0.0000001;
 static double maxVelocity;
 static double restRadius;
 static double forceConstant;
 static double repulsiveForceConstant;
 static double initialVelocity;
 static double minRadius;
+static double friction;
 static int frameNumber = 0;
 static double minPitch;
 static double maxPitch;
@@ -152,6 +154,7 @@ static int pitchDenominators[] = {1,8,4,3,2,3,8};
     maxVelocity = sqrt(area)*MAX_VELOCITY_PER_SQRT_AREA;
     initialVelocity = sqrt(area)*INITIAL_VELOCITY_PER_SQRT_AREA;
     minRadius = sqrt(area)*MIN_RADIUS_PER_SQRT_AREA;
+    friction = sqrt(area)*FRICTION_PER_SQRT_AREA;
     minPitch = pow(2,minOctave)*pitchNumerators[0]/pitchDenominators[0];
     maxPitch = pow(2,maxOctave)*pitchNumerators[6]/pitchDenominators[6];
     for (int i = 0;i < 1;i++) {
@@ -273,8 +276,9 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
     double xDiff = x - other->x - widthOffset;
     double yDiff = y - other->y - heightOffset;
     double acceleration = force/mass;
-    double dxTemp = dx + xDiff/d*acceleration;
-    double dyTemp = dy + yDiff/d*acceleration;
+    double distanceFactor = 1.0 - d/(radius + other->radius)/sqrt(2.0);
+    double dxTemp = dx + xDiff/d*acceleration - friction*dx*distanceFactor/mass;
+    double dyTemp = dy + yDiff/d*acceleration - friction*dy*distanceFactor/mass;
     double velocityTemp = sqrt(dxTemp*dxTemp+dyTemp*dyTemp);
     if (velocityTemp < maxVelocity) {
         dx = dxTemp;
@@ -320,16 +324,16 @@ double normalizedPitch(Musical* element) {
         //double h = element1->velocity/maxVelocity*255;
         //strokeHSB(0,0,h,150);
         //line(element1->lastX, element1->lastY, element1->x, element1->y);
-        //strokeHSB(0, 0, 255, 255);
-        //point(element1->x, element1->y);
+        // strokeHSB(0, 0, 255, 255);
+        // point(element1->x, element1->y);
         //strokeHSB(0, 0, 0, 255);
         //point(element1->lastX, element1->lastY);
         //point(element2->lastX, element2->lastY);
         //strokeHSB(0, 0, 100, 100);
         //circle(element1->x, element1->y, element1->radius);
-        //double velocityFactor = element1->velocity/maxVelocity*100+50;
-        //strokeHSB(0, 0, velocityFactor, velocityFactor);
-        //circle(element1->x, element1->y, element1->radius*sqrt(2.0));
+        // double velocityFactor = element1->velocity/maxVelocity*100+50;
+        // strokeHSB(0, 0, velocityFactor, velocityFactor);
+        // circle(element1->x, element1->y, element1->radius*2.0);
         for (int j = i+1; j < [elements count]; j++) {
             // Get a second element
             Musical* element2 = [elements objectAtIndex:j];
