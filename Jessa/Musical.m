@@ -122,7 +122,7 @@
 #import "Musical.h"
 #import "Processing.h"
 
-static double REST_RADIUS_PER_SQRT_AREA = 0.06;
+static double REST_RADIUS_PER_SQRT_AREA = 0.07;
 static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.00025;
 static double MAX_VELOCITY_PER_SQRT_AREA = 0.001;
 static double FORCE_CONSTANT_PER_AREA = .0000000125;
@@ -372,9 +372,29 @@ double normalizedPitch(Musical* element) {
         pitchDenominator = denominator;
         x = randomMax(width*1.02f) - width*0.01f;
         y = randomMax(height*1.02f) - height*0.01f;
-        while ([self touching]) {
-            x = randomMax(width*1.02f) - width*0.01f;
-            y = randomMax(height*1.02f) - height*0.01f;
+        double bestX;
+        double bestY;
+        double leastOverlap = 2*restRadius;
+        double overlap;
+        bool foundSpot = false;
+        for (int i=0;i<100;i++) {
+            if ([self touchingWithOverlap:&overlap]) {
+                if (overlap < leastOverlap) {
+                    leastOverlap = overlap;
+                    bestX = x;
+                    bestY = y;
+                }
+                x = randomMax(width*1.02f) - width*0.01f;
+                y = randomMax(height*1.02f) - height*0.01f;
+            }
+            else {
+                foundSpot = true;
+                break;
+            }
+        }
+        if (!foundSpot) {
+            x = bestX;
+            y = bestY;
         }
         velocity = initialVelocity;
         restMass = 5.0f;
@@ -385,6 +405,22 @@ double normalizedPitch(Musical* element) {
         dy = cosf(heading)*speed;
     }
     return self;
+}
+
+-(Boolean)touchingWithOverlap: (double*) overlap {
+    *overlap = 0.0;
+    double d2;
+    int widthOffset;
+    int heightOffset;
+    Element* element;
+    for (element in [Musical elements]) {
+        if (element != self) {
+            if ([self touching:element ThresholdMultiplier: 1.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset]) {
+                *overlap += sqrt(d2) - radius - element->radius;
+            }
+        }
+    }
+    return *overlap > 0.0;
 }
 
 int gcf(int a, int b) {
