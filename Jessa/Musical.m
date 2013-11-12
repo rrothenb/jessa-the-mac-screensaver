@@ -129,6 +129,12 @@ static double FORCE_CONSTANT_PER_AREA = .0000000125;
 static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.0000002;
 static double MIN_RADIUS_PER_SQRT_AREA = .00125;
 static double FRICTION_PER_SQRT_AREA = 0.0000001;
+static int MAX_TOUCHING = 25;
+static int NUM_COMPRESS_FRAMES = 450;
+static int NUM_EXPAND_FRAMES = 300;
+static int expandFrameNumber = 0;
+static int compressFrameNumber = 0;
+static double repulsiveForceModifier = 1.0;
 static double maxVelocity;
 static double restRadius;
 static double forceConstant;
@@ -185,16 +191,28 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
         Musical* element = [elements objectAtIndex:i];
         element->volume = 0;
         element->globalSonance = 0;
+        element->numTouching = 0;
     }
     // calculate volume - for every pair that overlaps, increment volume to max of 1
+    int maxNumTouching = 0;
     for (int i = 0; i < [elements count] - 1; i++) {
         Musical* element1 = [elements objectAtIndex:i];
         for (int j = i+1; j < [elements count]; j++) {
             Musical* element2 = [elements objectAtIndex:j];
-            double xDiff = element1->x - element2->x;
-            double yDiff = element1->y - element2->y;
-            double d2 = xDiff*xDiff + yDiff*yDiff;
-            if (d2 < (element1->radius + element2->radius)*(element1->radius + element2->radius)) {
+            int widthOffset;
+            int heightOffset;
+            double d2;
+            if ([element1 touching: element2 ThresholdMultiplier: 1.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset]) {
+                if (compressFrameNumber  == 0 && expandFrameNumber == 0) {
+                    element1->numTouching++;
+                    element2->numTouching++;
+                    if (element1->numTouching > maxNumTouching) {
+                        maxNumTouching = element1->numTouching;
+                    }
+                    if (element2->numTouching > maxNumTouching) {
+                        maxNumTouching = element2->numTouching;
+                    }
+                }
                 double d = sqrt(d2);
                 double distanceFactor = 1.0 - d/(element1->radius + element2->radius);
                 element1->volume += distanceFactor;
@@ -206,6 +224,23 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
                     element2->volume = 1.0;
                 }
             }
+        }
+    }
+    if (maxNumTouching > MAX_TOUCHING) {
+        compressFrameNumber = NUM_COMPRESS_FRAMES;
+    }
+    if (compressFrameNumber > 0) {
+        repulsiveForceModifier *= pow(1.0/100.0, 1.0/NUM_COMPRESS_FRAMES);
+        compressFrameNumber--;
+        if (compressFrameNumber == 0) {
+            expandFrameNumber = NUM_EXPAND_FRAMES;
+        }
+    }
+    if (expandFrameNumber > 0) {
+        repulsiveForceModifier = 10000.0;
+        expandFrameNumber--;
+        if (expandFrameNumber == 0) {
+            repulsiveForceModifier = 1.0;
         }
     }
     // calculate global sonance - for every element, go through all other elements that have a non zero volume and increment global sonance
@@ -240,11 +275,11 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
             int widthOffset;
             int heightOffset;
             double d2;
-            if ([element1 touching: element2 ThresholdMultiplier: 2.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset] && d2 > 0.1) {
+            if ([element1 touching: element2 ThresholdMultiplier: 2.0 DistanceSquared:&d2 WidthOffset:&widthOffset HeightOffset:&heightOffset] && d2 > 0.01) {
                 double d = sqrt(d2);
                 double pairSonance = [element1 calcSonance: element2];
                 double force = -1.0/d*calcConsonance(element1->globalSonance, element2->globalSonance, pairSonance)*forceConstant*element1->mass*element2->mass;
-                force += 1.0/(d2*d2)*repulsiveForceConstant;
+                force += 1.0/(d2*d2)*repulsiveForceConstant*repulsiveForceModifier;
                 [element1 updateVelocityUsingElement:element2 Force:force Distance:d WidthOffset:widthOffset HeightOffset:heightOffset];
                 [element2 updateVelocityUsingElement:element1 Force:force Distance:d WidthOffset:-widthOffset HeightOffset:-heightOffset];
             }
@@ -311,7 +346,7 @@ double normalizedPitch(Musical* element) {
 }
 +(void)draw {
     frameNumber++;
-    if (frameNumber == 300) {
+    if (frameNumber == 150) {
         fillHSB(0.0f, 0.0f, 0.0f, 0.5f);
         background();
         frameNumber = 0;
@@ -324,16 +359,20 @@ double normalizedPitch(Musical* element) {
         //double h = element1->velocity/maxVelocity*255;
         //strokeHSB(0,0,h,150);
         //line(element1->lastX, element1->lastY, element1->x, element1->y);
-        // strokeHSB(0, 0, 255, 255);
-        // point(element1->x, element1->y);
         //strokeHSB(0, 0, 0, 255);
         //point(element1->lastX, element1->lastY);
         //point(element2->lastX, element2->lastY);
         //strokeHSB(0, 0, 100, 100);
         //circle(element1->x, element1->y, element1->radius);
-        // double velocityFactor = element1->velocity/maxVelocity*100+50;
-        // strokeHSB(0, 0, velocityFactor, velocityFactor);
-        // circle(element1->x, element1->y, element1->radius*2.0);
+        /*
+        if (compressFrameNumber > 0) {
+            //strokeHSB(0, 0, 255, 100);
+            //point(element1->x, element1->y);
+            double velocityFactor = element1->velocity/maxVelocity*100+50;
+            strokeHSB(0, 0, velocityFactor, velocityFactor/6);
+            circle(element1->x, element1->y, element1->radius*2.0);
+        }
+        */
         for (int j = i+1; j < [elements count]; j++) {
             // Get a second element
             Musical* element2 = [elements objectAtIndex:j];

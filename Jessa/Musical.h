@@ -21,6 +21,7 @@
     int pitchOctave;
     int pitchNumerator;
     int pitchDenominator;
+    int numTouching;
 }
 +(void)update;
 +(void)createInstances;
