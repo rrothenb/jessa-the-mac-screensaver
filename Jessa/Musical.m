@@ -122,6 +122,11 @@
 #import "Musical.h"
 #import "Processing.h"
 
+#include <CoreFoundation/CoreFoundation.h>
+#include <AudioToolbox/AudioToolbox.h>
+#import <OpenAL/al.h>
+#import <OpenAL/alc.h>
+
 static double REST_RADIUS_PER_SQRT_AREA = 0.07;
 static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.00025;
 static double MAX_VELOCITY_PER_SQRT_AREA = 0.001;
@@ -129,9 +134,9 @@ static double FORCE_CONSTANT_PER_AREA = .0000000125;
 static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.0000002;
 static double MIN_RADIUS_PER_SQRT_AREA = .00125;
 static double FRICTION_PER_SQRT_AREA = 0.0000001;
-static int MAX_TOUCHING = 25;
-static int NUM_COMPRESS_FRAMES = 450;
-static int NUM_EXPAND_FRAMES = 300;
+static int MAX_TOUCHING = 10;
+static int NUM_COMPRESS_FRAMES = 900;
+static int NUM_EXPAND_FRAMES = 900;
 static int expandFrameNumber = 0;
 static int compressFrameNumber = 0;
 static double repulsiveForceModifier = 1.0;
@@ -237,7 +242,7 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
         }
     }
     if (expandFrameNumber > 0) {
-        repulsiveForceModifier = 10000.0;
+        repulsiveForceModifier = 100.0;
         expandFrameNumber--;
         if (expandFrameNumber == 0) {
             repulsiveForceModifier = 1.0;
@@ -327,7 +332,6 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
 
 double normalizedPitch(Musical* element) {
     return ((double)element->pitchNumerator/element->pitchDenominator-1.0)/(7.0/8.0);
-    //return (pow(2,element->pitchOctave)*element->pitchNumerator/element->pitchDenominator-minPitch)/(maxPitch-minPitch);
 }
 
 -(void)draw:(Musical*)other WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset Distance:(double) distance {
@@ -346,7 +350,7 @@ double normalizedPitch(Musical* element) {
 }
 +(void)draw {
     frameNumber++;
-    if (frameNumber == 150) {
+    if (frameNumber == 250) {
         fillHSB(0.0f, 0.0f, 0.0f, 0.5f);
         background();
         frameNumber = 0;
@@ -365,14 +369,14 @@ double normalizedPitch(Musical* element) {
         //strokeHSB(0, 0, 100, 100);
         //circle(element1->x, element1->y, element1->radius);
         /*
-        if (compressFrameNumber > 0) {
+        if (compressFrameNumber == NUM_COMPRESS_FRAMES - 1 || compressFrameNumber == 1 || expandFrameNumber == 1) {
             //strokeHSB(0, 0, 255, 100);
             //point(element1->x, element1->y);
-            double velocityFactor = element1->velocity/maxVelocity*100+50;
-            strokeHSB(0, 0, velocityFactor, velocityFactor/6);
-            circle(element1->x, element1->y, element1->radius*2.0);
+            //double velocityFactor = element1->velocity/maxVelocity*100+50;
+            strokeHSB(0, 0, 255, 100);
+            circle(element1->x, element1->y, element1->radius);
         }
-        */
+         */
         for (int j = i+1; j < [elements count]; j++) {
             // Get a second element
             Musical* element2 = [elements objectAtIndex:j];
