@@ -17,11 +17,13 @@
     double lastX;
     double lastY;
     double volume;
+    double lastVolume;
     double globalSonance;
     int pitchOctave;
     int pitchNumerator;
     int pitchDenominator;
     int numTouching;
+    int voice;
 }
 +(void)update;
 +(void)createInstances;

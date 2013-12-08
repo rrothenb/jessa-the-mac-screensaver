@@ -121,14 +121,10 @@
 
 #import "Musical.h"
 #import "Processing.h"
+#import "Sound.h"
 
-#include <CoreFoundation/CoreFoundation.h>
-#include <AudioToolbox/AudioToolbox.h>
-#import <OpenAL/al.h>
-#import <OpenAL/alc.h>
-
-static double REST_RADIUS_PER_SQRT_AREA = 0.07;
-static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.00025;
+static double REST_RADIUS_PER_SQRT_AREA = 0.065;
+static double INITIAL_VELOCITY_PER_SQRT_AREA = 0.0002;
 static double MAX_VELOCITY_PER_SQRT_AREA = 0.001;
 static double FORCE_CONSTANT_PER_AREA = .0000000125;
 static double REPULSIVE_FORCE_CONSTANT_PER_AREA_SQUARED = 0.0000002;
@@ -168,6 +164,7 @@ static int pitchDenominators[] = {1,8,4,3,2,3,8};
     friction = sqrt(area)*FRICTION_PER_SQRT_AREA;
     minPitch = pow(2,minOctave)*pitchNumerators[0]/pitchDenominators[0];
     maxPitch = pow(2,maxOctave)*pitchNumerators[6]/pitchDenominators[6];
+    initSound(width, height, minPitch, maxPitch);
     for (int i = 0;i < 1;i++) {
         for (int j = minOctave; j <= maxOctave;j++) {
             for (int k = 0;k < 7;k++) {
@@ -194,12 +191,14 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
     // initialize - for every element, set volume and global sonance to 0
     for (int i = 0; i < [elements count]; i++) {
         Musical* element = [elements objectAtIndex:i];
+        element->lastVolume = element->volume;
         element->volume = 0;
         element->globalSonance = 0;
         element->numTouching = 0;
     }
-    // calculate volume - for every pair that overlaps, increment volume to max of 1
+    // calculate volume - for every pair that overlaps, increment volume
     int maxNumTouching = 0;
+    double totalVolume = 0;
     for (int i = 0; i < [elements count] - 1; i++) {
         Musical* element1 = [elements objectAtIndex:i];
         for (int j = i+1; j < [elements count]; j++) {
@@ -220,17 +219,31 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
                 }
                 double d = sqrt(d2);
                 double distanceFactor = 1.0 - d/(element1->radius + element2->radius);
-                element1->volume += distanceFactor;
-                element2->volume += distanceFactor;
+                double pairSonance = [element1 calcSonance:element2];
+                double consonance = pairSonance/2+.5;
+                element1->volume += distanceFactor*consonance;
+                element2->volume += distanceFactor*consonance;
+                totalVolume += 2*distanceFactor*consonance;
                 if (element1->volume > 1.0) {
+                    totalVolume = totalVolume - element1->volume + 1.0;
                     element1->volume = 1.0;
                 }
                 if (element2->volume > 1.0) {
+                    totalVolume = totalVolume - element2->volume + 1.0;
                     element2->volume = 1.0;
                 }
             }
         }
     }
+    /*
+    // normalize volume
+    if (totalVolume > 1.0) {
+        for (int i = 0; i < [elements count]; i++) {
+            Musical* element = [elements objectAtIndex:i];
+            element->volume = element->volume/totalVolume;
+        }
+    }
+     */
     if (maxNumTouching > MAX_TOUCHING) {
         compressFrameNumber = NUM_COMPRESS_FRAMES;
     }
@@ -259,7 +272,7 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
             if (element2->volume == 0.0) {
                 continue;
             }
-            element1->globalSonance += [element1 calcSonance: element2]*element2->volume;
+            element1->globalSonance += [element1 calcSonance: element2]*element2->volume*0.25;
         }
     }
     // limit global sonance
@@ -310,6 +323,23 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
             element->y = element->y + height;
         }
     }
+    // update sounds
+    for (int i = 0; i < [elements count]; i++) {
+        Musical* element = [elements objectAtIndex:i];
+        if (element->volume == 0.0 && element->lastVolume > 0.0) {
+            releaseSound(element->voice);
+            element->voice = -1;
+        }
+        else if (element->volume > 0.0 && element->lastVolume == 0.0) {
+            element->voice = allocateSound();
+        }
+        if (element->voice != -1) {
+            updateSound(
+                        element->voice,
+                        pow(2.0, element->pitchOctave)*element->pitchNumerator/element->pitchDenominator,
+                        element->volume, element->x, element->y, element->dx, element->dy, element->globalSonance, element->velocity/maxVelocity);
+        }
+    }
 }
 
 -(void)updateVelocityUsingElement: (Element*) other Force: (double) force Distance: (double) d WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset {
@@ -331,7 +361,7 @@ double calcConsonance(double sonance1, double sonance2, double sonance3) {
 }
 
 double normalizedPitch(Musical* element) {
-    return ((double)element->pitchNumerator/element->pitchDenominator-1.0)/(7.0/8.0);
+    return (pow(2.0,element->pitchOctave)*element->pitchNumerator/element->pitchDenominator-minPitch)/(maxPitch-minPitch);
 }
 
 -(void)draw:(Musical*)other WidthOffset: (int) widthOffset HeightOffset: (int) heightOffset Distance:(double) distance {
@@ -340,8 +370,8 @@ double normalizedPitch(Musical* element) {
     double distanceFactor = distance/(radius + other->radius);
     //double h = (h1 + h2)/2;
     double pairSonance = [self calcSonance:other];
-    double consonance = calcConsonance(globalSonance, other->globalSonance, pairSonance);
-    consonance = consonance/2+.5f;
+    //double consonance = calcConsonance(globalSonance, other->globalSonance, pairSonance);
+    double consonance = pairSonance/2+.5f;
     
     strokeHSB(h1,255,(1-distanceFactor)*255,consonance*255/4);
     line(x, y, other->x + widthOffset, other->y + heightOffset);
@@ -350,7 +380,7 @@ double normalizedPitch(Musical* element) {
 }
 +(void)draw {
     frameNumber++;
-    if (frameNumber == 250) {
+    if (frameNumber == 300) {
         fillHSB(0.0f, 0.0f, 0.0f, 0.5f);
         background();
         frameNumber = 0;
@@ -420,7 +450,7 @@ double normalizedPitch(Musical* element) {
         double leastOverlap = 2*restRadius;
         double overlap;
         bool foundSpot = false;
-        for (int i=0;i<100;i++) {
+        for (int i=0;i<10000;i++) {
             if ([self touchingWithOverlap:&overlap]) {
                 if (overlap < leastOverlap) {
                     leastOverlap = overlap;
@@ -485,8 +515,8 @@ int gcf(int a, int b) {
         low = other;
         high = self;
     }
-    int intervalNumerator = pow(2.0f,high->pitchOctave)*high->pitchNumerator*low->pitchDenominator;
-    int intervalDenominator = pow(2.0f,low->pitchOctave)*low->pitchNumerator*high->pitchDenominator;
+    int intervalNumerator = round(pow(2.0,high->pitchOctave)*high->pitchNumerator*low->pitchDenominator);
+    int intervalDenominator = round(pow(2.0,low->pitchOctave)*low->pitchNumerator*high->pitchDenominator);
     int commonFactor = gcf(intervalNumerator, intervalDenominator);
     intervalNumerator = intervalNumerator/commonFactor;
     intervalDenominator = intervalDenominator/commonFactor;
